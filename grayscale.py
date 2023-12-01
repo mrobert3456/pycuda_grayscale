@@ -1,3 +1,4 @@
+import os
 import pycuda.driver as cuda
 import pycuda.autoinit
 from pycuda.compiler import SourceModule
@@ -7,6 +8,12 @@ import cv2 as cv
 import math
 from timeit import default_timer as timer
 BLOCK_SIZE = 32
+
+
+# you need to specify the path to cl.exe if it's not in the PATH variable when you installed C++
+if (os.system("cl.exe")):
+    os.environ['PATH'] += ';' + r"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64"
+
 
 def grayscale_gpu(img):
     result = numpy.empty_like(img)
@@ -48,7 +55,7 @@ def grayscale_gpu(img):
                 __shared__ unsigned char G_shared[32][32];
                 __shared__ unsigned char B_shared[32][32];
                 
-                const unsigned int idx = col+row*width; # each thread computes it's working index
+                const unsigned int idx = col+row*width; // each thread computes it's working index
                 
                 // copy data to shared memory
                 // each thread copies its corresponding data to the shared memory
