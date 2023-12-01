@@ -34,13 +34,13 @@ def grayscale_gpu(img):
 
     # Each thread will compute its corresponding cell
     mod = SourceModule("""
-            __global__ void Convert_To_Gray(unsigned char * R, unsigned char * G, unsigned char * B, const unsigned int width, const unsigned int height)
+            __global__ void ConvertToGray(unsigned char * R, unsigned char * G, unsigned char * B, const unsigned int width, const unsigned int height)
             {
                 // Calculate indexes of each thread
                 const unsigned int row = threadIdx.y + blockIdx.y * blockDim.y;
                 const unsigned int col = threadIdx.x + blockIdx.x * blockDim.x;
                 
-                //if the current thread idx is inside the img boundaries
+                //if the current thread idx is outside the img boundaries
                 if (row >= height && col >= width) {
                     return;
                 }
@@ -48,7 +48,7 @@ def grayscale_gpu(img):
                 __shared__ unsigned char G_shared[32][32];
                 __shared__ unsigned char B_shared[32][32];
                 
-                const unsigned int idx = col+row*width;
+                const unsigned int idx = col+row*width; # each thread computes it's working index
                 
                 // copy data to shared memory
                 // each thread copies its corresponding data to the shared memory
@@ -71,7 +71,7 @@ def grayscale_gpu(img):
                  }
        """)
 
-    grayConv = mod.get_function("Convert_To_Gray")
+    grayConv = mod.get_function("ConvertToGray")
 
     # determine necessary block count
     # 1 block can handle max 1024 threads
