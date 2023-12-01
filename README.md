@@ -31,7 +31,7 @@ This project utilizes the following packages:
 * Python 3
 * OpenCV 2
 * Numpy
-* [Pycuda](https://developer.nvidia.com/how-to-cuda-python)
+* [Pycuda](https://documen.tician.de/pycuda/)
 
 
 # 🚀 Usage
