@@ -118,8 +118,15 @@ if __name__ == '__main__':
     timer_start = timer()
     gray_img = grayscale_gpu(img)
     timer_stop = timer()
-    
+
     print(f'GPU time: {timer_stop - timer_start} seconds')
+
+    timer_start = timer()
+    cpu_gray_img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    timer_stop = timer()
+
+    print(f'CPU time: {timer_stop - timer_start} seconds')
+
 
     cv.imshow('Image', gray_img)
     cv.waitKey(0)
