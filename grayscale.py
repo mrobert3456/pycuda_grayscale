@@ -5,7 +5,7 @@ import numpy
 
 import cv2 as cv
 import math
-
+from timeit import default_timer as timer
 BLOCK_SIZE = 32
 
 def grayscale_gpu(img):
@@ -114,7 +114,13 @@ def grayscale_gpu(img):
 if __name__ == '__main__':
     image_path = 'landscape.jpg'
     img = cv.imread(image_path)
+
+    timer_start = timer()
     gray_img = grayscale_gpu(img)
+    timer_stop = timer()
+    
+    print(f'GPU time: {timer_stop - timer_start} seconds')
+
     cv.imshow('Image', gray_img)
     cv.waitKey(0)
     cv.destroyAllWindows()
