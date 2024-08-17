@@ -65,8 +65,8 @@ def grayscale_gpu(img):
                 G_shared[threadIdx.y][threadIdx.x] = G[idx];
                 B_shared[threadIdx.y][threadIdx.x] = B[idx];
                 
-                const unsigned char intensity = R_shared[threadIdx.y][threadIdx.x]*0.07+G_shared[threadIdx.y][
-                threadIdx.x]*0.72+B_shared[threadIdx.y][threadIdx.x]*0.21; 
+                const unsigned char intensity = R_shared[threadIdx.y][threadIdx.x]*0.299+G_shared[threadIdx.y][
+                threadIdx.x]*0.587+B_shared[threadIdx.y][threadIdx.x]*0.114; 
 
                 R_shared[threadIdx.y][threadIdx.x] = intensity;
                 G_shared[threadIdx.y][threadIdx.x] = intensity;
@@ -87,7 +87,6 @@ def grayscale_gpu(img):
     # grid =collection of blocks
     #  cannot communicate to each other
     # block have limited shared memory, which is faster than global memory
-    block_count = (height * width - 1) / BLOCK_SIZE * BLOCK_SIZE + 1  # 921600 threads
     grayConv(dev_R,
              dev_G,
              dev_B,
@@ -136,7 +135,6 @@ if __name__ == '__main__':
     timer_stop = timer()
 
     print(f'CPU time: {timer_stop - timer_start} seconds')
-
 
     cv.imshow('Image', gray_img)
     cv.waitKey(0)
