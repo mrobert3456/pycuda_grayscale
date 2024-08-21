@@ -120,14 +120,14 @@ def grayscale_gpu(img):
 
 
 if __name__ == '__main__':
-    image_path = str(sys.argv[1]) if len(sys.argv) >= 2 else 'landscape.jpg'
+    image_path = str(sys.argv[1]) if len(sys.argv) >= 2 else 'input.jpg'
     img = cv.imread(image_path)
 
     timer_start = timer()
     gray_img = grayscale_gpu(img)
     timer_stop = timer()
 
-    cv.imwrite("output.jpg",gray_img)
+    cv.imwrite("output.jpg", gray_img)
     print(f'GPU time: {timer_stop - timer_start} seconds')
 
     timer_start = timer()
