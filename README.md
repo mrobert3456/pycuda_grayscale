@@ -9,6 +9,9 @@
 The algorithm represent a data parallel implementation of image grayscaling.
 Each thread will be responsible to convert one pixel of the image to gray.
 
+For detailed description of how it works, please check out my blog on Medium:
+https://medium.com/@mrobert3456/image-grayscale-with-pycuda-1e20e81babc7
+
 # 📦 Installation
 
 ## This Repository
